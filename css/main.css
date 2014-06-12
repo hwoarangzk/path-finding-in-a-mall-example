@@ -1,0 +1,28 @@
+body{
+   margin:0 auto; 
+   overflow: hidden;
+}
+ul{
+    list-style:none;
+}
+ul li{
+    list-style:none;
+}
+.parking-map{
+    width:1028px;
+    height:680px;
+}
+#map-container{
+    width:1028px;
+    height:680px;
+    position:relative;
+    left:-60px;
+}
+
+#map-container .map{
+    width:1028px;
+    height:680px;
+}
+.hidden-svg{
+    display:block;
+}

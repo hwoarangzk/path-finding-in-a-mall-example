@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<title>demo</title>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+    <style>
+        .svgContainer {display:none;}
+        #floors {list-style: none;}
+        #floors li {float: left; margin: 5px;}
+        .stage {
+            width: 100%;
+            height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top :55px;
+            background-color: #fff;
+            border: 1px solid yellow;
+            -webkit-transition: top .5s;
+            perspective: 800px;
+            -webkit-perspective: 800px;
+        }
+
+        @keyframes upOut{
+            0% {
+                opacity: 1;
+                transform: translateZ(0);
+                
+            }
+            20% {
+                opacity: 0;
+                transform: translateZ(-100px);
+                
+            }
+            100% {
+                opacity: 0;
+                transform: translateZ(-10000px);
+                
+            }
+            
+        }
+
+        @-webkit-keyframes upOut{
+            0% {
+                opacity: 1;
+                -webkit-transform: translateZ(0);
+                
+            }
+            20% {
+                opacity: 0;
+                -webkit-transform: translateZ(-100px);
+                
+            }
+            100% {
+                opacity: 0;
+                -webkit-transform: translateZ(-10000px);
+                
+            }
+            
+        }
+
+
+        .upOut{
+            -webkit-animation-name: upOut;
+            animation-name: upOut;
+            /*z-index:-1000;*/
+        }
+
+        @keyframes downOut{
+            0% {
+                opacity: 1;
+                transform: translateZ(0);
+                
+            }
+            20% {
+                opacity: 0;
+                transform: translateZ(100px);
+                
+            }
+            100% {
+                opacity: 0;
+                transform: translateZ(2000px);
+            }
+        }
+
+        @-webkit-keyframes downOut{
+            0% {
+                opacity: 1;
+                -webkit-transform: translateZ(0);
+                
+            }
+            20% {
+                opacity: 0;
+                -webkit-transform: translateZ(100px);
+                
+            }
+            100% {
+                opacity: 0;
+                -webkit-transform: translateZ(2000px);
+                /*z-index:-1000;*/
+                
+            }
+        }
+
+
+        .downOut{
+            -webkit-animation-name: downOut;
+            animation-name: downOut;
+            /*z-index:-1000;*/
+        }
+
+        @-webkit-keyframes downIn {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateZ(-200px);
+            }
+
+            50% {
+                opacity: 1;
+                -webkit-transform: translateZ(5px);
+            }
+            
+            
+            100% {
+                opacity: 1;
+                -webkit-transform: translateZ(0);
+            }
+        }
+
+
+        @keyframes downIn {
+            0% {
+                opacity: 0;
+                transform: translateZ(-200px);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateZ(5px);
+            }
+            
+            
+            100% {
+                opacity: 1;
+                transform: translateZ(0);
+            }
+        }
+
+
+
+
+        .downIn{
+            -webkit-animation-name: downIn;
+            animation-name: downIn;
+        }
+
+        @-webkit-keyframes upIn {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateZ(200px);
+            }
+            75% {
+                opacity: 1;
+                -webkit-transform: translateZ(-5px);
+            }
+            
+            100% {
+                opacity: 1;
+                -webkit-transform: translateZ(0);
+            }
+        }
+
+
+        @keyframes upIn {
+            0% {
+                opacity: 0;
+                transform: translateZ(200px);
+            }
+            75% {
+                opacity: 1;
+                transform: translateZ(-5px);
+            }
+            
+            
+            100% {
+                opacity: 1;
+                transform: translateZ(0);
+            }
+        }
+
+
+
+
+        .upIn{
+            -webkit-animation-name: upIn;
+            animation-name: upIn;
+        }
+
+
+        .piece {
+            width: 1028px;
+            height: 680px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin:  -340px 0 0 -514px;
+            cursor: pointer;
+            display: none;
+            -webkit-animation-duration: 1s;
+            -webkit-animation-delay: .2s;
+            -webkit-animation-timing-function: ease;
+            -webkit-animation-fill-mode: both;
+            -moz-animation-duration: 1.5s;
+            -moz-animation-delay: 0.2s;
+            -moz-animation-timing-function: ease;
+            -moz-animation-fill-mode: both;
+            -ms-animation-duration: 1s;
+            -ms-animation-delay: .2s;
+            -ms-animation-timing-function: ease;
+            -ms-animation-fill-mode: both;
+            -o-animation-duration: 1s;
+            -o-animation-delay: .2s;
+            -o-animation-timing-function: ease;
+            -o-animation-fill-mode: both;
+            animation-duration: 1.5s;
+            animation-delay: .2s;
+            animation-timing-function: ease;
+            animation-fill-mode: both;
+        }
+
+    </style>
+    <script type="text/javascript" src="javascript/lib/jquery.js"></script>
+    <script type="text/javascript" src="javascript/lib/raphael-min.js"></script>
+    <script type="text/javascript" src="javascript/lib/raphael-svg-import.js"></script>
+    <script type="text/javascript" src="javascript/lib/svg-pan-zoom-latest.js"></script>
+    <script type="text/javascript" src="javascript/lib/pathfinding-browser.js"></script>
+    <script type="text/javascript" src="javascript/j.Utils.js"></script>
+    <script type="text/javascript" src="javascript/zhuhaiData.js"></script>
+</head>
+<body>
+    <div class="main-container">
+        <input type="button" value="Find Path" id="find" />
+        <input type="button" value="ZoomOut" id="ZoomOut" />
+        <input type="button" value="ZoomIn" id="ZoomIn" />
+        当前楼层:<span id="currentFloor"></span>
+        <ul id="floors">
+            <li><input type="button" value="F1" floor="F1" /></li>
+            <li><input type="button" value="F2" floor="F2" /></li>
+            <li><input type="button" value="F3" floor="F3" /></li>
+        </ul>
+        <div id="svgContainer" class="stage">
+            <div class="svgContainer piece" id="svg0" floorName="F1"></div>
+            <div class="svgContainer piece" id="svg1" floorName="F2"></div>
+            <div class="svgContainer piece" id="svg2" floorName="F3"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="javascript/j.navigator.js"></script>
+</body>
+</html>

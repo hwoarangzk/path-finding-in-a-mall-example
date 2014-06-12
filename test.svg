@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="400" height="400" currentScale="1" id="demo-paper">
+    <g class="viewport">
+    	<circle cx="200" cy="200" r="200" fill="red"/>
+    </g>
+</svg>
